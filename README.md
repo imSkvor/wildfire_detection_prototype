@@ -26,7 +26,7 @@ Fine-tuned: https://huggingface.co/EdBianchi/vit-fire-detection
 ### Установка зависимостей:
 
 ```bash
-git clone https://github.com/imSkvor/wildfire-detection.git
+git clone https://github.com/imSkvor/wildfire_detection_prototype.git
 cd wildfire-detection
 pip install -r requirements.txt
 ```
