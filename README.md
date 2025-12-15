@@ -33,8 +33,9 @@ pip install -r requirements.txt
 
 ### Загрузка данных:
 
-```bash
+Данные взяты из https://www.kaggle.com/datasets/gurveersinghvirk/wildfire-images?resource=download-directory&select=train
 
+```bash
 unzip wildfire-prediction-dataset.zip -d data/raw_orig/
 ```
 
