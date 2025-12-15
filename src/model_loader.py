@@ -19,12 +19,13 @@ class ModelLoader:
     model_configs = {
         "base": {
             "model_name": "Gurveer05/vit-base-patch16-224-in21k-fire-detection",
-            "description": "Базовая ViT модель, дообученная на датасете пожаров"
-
+            "description": "Базовая ViT модель, дообученная на датасете пожаров",
+            "label_mapping": {"LABEL_0": "no_fire", "LABEL_1": "fire"}
         },
         "finetuned": {
             "model_name": "EdBianchi/vit-fire-detection",
-            "description": "Дообученная версия ViT с высокими метриками"
+            "description": "Дообученная версия ViT с высокими метриками",
+            "label_mapping": {"Fire": "fire", "Normal": "no_fire", "Smoke": "no_fire"}
         }
     }
 
@@ -141,3 +142,31 @@ class ModelLoader:
             raise ValueError(f"Процессор для модели {model_key} не загружен")
 
         return self.processors[model_key](images, return_tensors = "pt")
+
+
+    def predict_with_mapping(self, images, model_key: str = "base"):
+        """
+        Предсказание модели с автоматическим преобразованием меток
+        """
+
+        if model_key not in self.processors:
+            raise ValueError(f"Модель {model_key} не загружена")
+
+        model, processor = self.models[model_key], self.processors[model_key]
+
+        inputs = processor(images, return_tensors = "pt").to(self.device)
+
+        with torch.no_grad():
+            outputs = model(**inputs)
+            probs = torch.nn.functional.softmax(outputs.logits, dim=-1)
+
+            if model_key == "finetuned":
+                # Fire -> fire (0), Normal+Smoke -> no_fire (1)
+                fire_prob = probs[0, 0]
+                no_fire_prob = probs[0, 1] + probs[0, 2]
+                probs = torch.tensor([[fire_prob, no_fire_prob]])
+
+            pred_class = torch.argmax(probs, dim=-1).item()
+            confidence = probs[0, pred_class].item()
+
+        return pred_class, confidence

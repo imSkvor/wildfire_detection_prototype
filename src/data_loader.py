@@ -13,10 +13,10 @@ class WildFireDataLoader:
     Выполняет:
 
     """
-    class_mapping: dict[str, int] = {"wildfire": 0, "nowildfire": 1}
-    reversed_class_mapping: dict[int, str] = {0: "wildfire", 1: "nowildfire"}
+    class_mapping: dict[str, int] = {"Fire": 0, "Non_Fire": 1}
+    reversed_class_mapping: dict[int, str] = {0: "Fire", 1: "Non_Fire"}
 
-    def __init__(self, base_path: str = "../data/raw"):
+    def __init__(self, base_path: str = "../data/raw_orig"):
         """
         Инициализация загрузчика данных.
         base_path: str -- пусть к папке с исходными данными
@@ -118,7 +118,7 @@ class WildFireDataLoader:
         structure = self.discover_structure()
         logger.info(f"Структура: {structure}")
 
-        if structure["train_exists"] and structure["train_subfolders"]:
+        if structure["test_exists"] and structure["test_subfolders"]:
             self.train_df = self.load_from_subfolder("train")
             self.test_df = self.load_from_subfolder("test")
         else:
