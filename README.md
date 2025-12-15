@@ -26,15 +26,16 @@ Fine-tuned: https://huggingface.co/EdBianchi/vit-fire-detection
 ### Установка зависимостей:
 
 ```bash
-git clone https://github.com/imSkvor/wildfire-detection.git
+git clone https://github.com/imSkvor/wildfire_detection_prototype.git
 cd wildfire-detection
 pip install -r requirements.txt
 ```
 
 ### Загрузка данных:
 
-```bash
+Данные взяты из https://www.kaggle.com/datasets/gurveersinghvirk/wildfire-images?resource=download-directory&select=train
 
+```bash
 unzip wildfire-prediction-dataset.zip -d data/raw_orig/
 ```
 
