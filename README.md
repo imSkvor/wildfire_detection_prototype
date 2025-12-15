@@ -140,3 +140,27 @@ comparison_df = evaluator.compare_models("test")
 # Зависимости
 
 Основные зависимости перечислены в `requirements.txt`
+
+
+# upd. Новые данные
+
+Прогнал те же модели, на ещё одном датасете:
+https://www.kaggle.com/datasets/mohnishsaiprasad/forest-fire-images/suggestions
+
+Данные лежат (локально) в `./data/v2/Data/`
+
+Ноутбук лежит в `./notebooks/03_new_data_computation.ipynb`, запусается через
+
+```bash
+jupyter notebook notebooks/02_model_evaluation.ipynb
+```
+
+Имеем очень высокие метрики для этих данных:
+
+
+| Модель | Accuracy | Precision | **Recall** | F1-Score |
+|--------|----------|-----------|------------|----------|
+| `vit-base-patch16-224-in21k-fire-detection` | 0.9924 | 0.9920 | **0.9940** | 0.9930 |
+| `vit-fire-detection` (fine-tuned) | 0.9984 | 0.9980 | 0.9992 | 0.9986 |
+
+На этих данных имеем ещё более высокии показатели, `vit-fire-detection` заметно обгоняет  `vit-base-patch16-224-in21k-fire-detection` по качеству (основная метрика -- Recall 0.9992 vs 0.9920). Это подсказывает, что для исходного датасета проблема действительно могла быть с трудностями обработки задымления
