@@ -1,0 +1,15 @@
+# data & models
+data/
+models/
+outputs/
+
+# cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache
+.ipybn_checkpoints/
+
+# env
+.venv/
+.vscode/
